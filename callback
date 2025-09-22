@@ -1,0 +1,25 @@
+<html>
+<head>
+  <title>Cerner FHIR Redirect</title>
+</head>
+<body>
+  <h2>OAuth2 Redirect Handler</h2>
+  <p id="status">Processing redirect…</p>
+  <script>
+    // Extract query parameters (code, state, error, etc.)
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("error")) {
+      document.getElementById("status").innerText =
+        "Error: " + params.get("error_description") || params.get("error");
+    } else if (params.has("code")) {
+      // In a real app, you would POST this code back to your backend server
+      // to exchange it for tokens with the Cerner OAuth2 token endpoint.
+      document.getElementById("status").innerText =
+        "Authorization code received: " + params.get("code");
+    } else {
+      document.getElementById("status").innerText = "No code or error in redirect.";
+    }
+  </script>
+</body>
+</html>
