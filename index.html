@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Cerner FHIR Sandbox Launch</title>
+</head>
+<body>
+  <h2>Cerner FHIR Sandbox Patient Launch</h2>
+  <p>Click the button below to launch into the Cerner FHIR sandbox as a patient.</p>
+
+  <button onclick="launch()">Launch Cerner Sandbox</button>
+
+  <script>
+    function launch() {
+      // Sandbox FHIR base URL (R4)
+      const iss = encodeURIComponent("https://fhir-myrecord.cerner.com/r4/ec2458f2-1e24-41c8-b71b-0e701af7583d");
+
+      // Your registered app's client_id (replace with your sandbox app's client_id from Cerner Code Console)
+      const clientId = "YOUR_CLIENT_ID_HERE";
+
+      // Redirect URI (must match what you set in Cerner's app registration)
+      const redirectUri = encodeURIComponent("https://yourdomain.github.io/yourapp/callback.html");
+
+      // Build the SMART on FHIR launch URL
+      const launchUrl =
+        `https://authorization.sandboxcerner.com/authorize?` +
+        `response_type=code&` +
+        `client_id=${clientId}&` +
+        `redirect_uri=${redirectUri}&` +
+        `scope=launch/patient openid profile online_access patient/Patient.read patient/Observation.read&` +
+        `aud=${iss}&` +
+        `state=123&` +
+        `prompt=login`;
+
+      window.location.href = launchUrl;
+    }
+  </script>
+</body>
+</html>
